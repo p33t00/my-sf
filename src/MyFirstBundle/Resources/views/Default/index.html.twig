@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="text-primary panel-heading">Todo List</div>
+
+        <!-- Table -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Task</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Due Date</th>
+                    <th>Create Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+                {% for task in list %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.category }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.priority }}</td>
+                        <td>{{ task.dueDate|date('F j, Y, g:i a') }}</td>
+                        <td>{{ task.createDate.date }}</td>
+                        <td>
+                            <a href={{path('todo_details', {'id':task.id})}} class='btn btn-success'>Details</a>
+                            <a href={{path('todo_edit', {'id':task.id})}} class='btn btn-default'>Edit</a>
+                            <a href={{path('todo_delete', {'id':task.id})}} class='btn btn-danger'>Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
