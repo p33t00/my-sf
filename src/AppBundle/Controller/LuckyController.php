@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class LuckyController extends Controller
 {
     /**
-     * @Route("/lucky/{num}/resp", name="lucky_page")
+     * @Route("/{num}/resp", name="json_page")
      * @Method("GET")
      */
     public function indexAction(Request $request)
@@ -27,5 +27,13 @@ class LuckyController extends Controller
         ];
 
         return new JsonResponse($data);
+    }
+
+    /**
+     * @Route("/octo", name="octo_page")
+     */
+    public function octoAction(Request $request)
+    {
+        return $this->render('AppBundle:Default:app_lucky_octo.html.twig');
     }
 }
