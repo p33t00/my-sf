@@ -6,10 +6,14 @@ blog:
 my_first:
     resource: "@MyFirstBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /mf
 
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     prefix: /dub
+
+test:
+      path: /dub/tp
+      defaults: { _controller: AppBundle:Lucky:test }
 
