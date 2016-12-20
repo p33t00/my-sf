@@ -3,6 +3,15 @@ blog:
     type:     annotation
     prefix:   /
 
+# some routes must have '/' at the end 
+# otherwise an exception might be thrown - BlogBundle\Entity\Post object not found.
+# Don't know the reason of it 
+stat: 
+    path: /statest/
+    defaults: 
+        _controller: FrameworkBundle:Template:template
+        template:  AppBundle:Default:app_lucky_octo.html.twig
+
 my_first:
     resource: "@MyFirstBundle/Controller/"
     type:     annotation
@@ -16,4 +25,3 @@ app:
 test:
       path: /dub/tp
       defaults: { _controller: AppBundle:Lucky:test }
-
