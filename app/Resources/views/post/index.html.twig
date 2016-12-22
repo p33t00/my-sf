@@ -48,15 +48,24 @@
         <li>
             <a href="{{ path('_new') }}">Create a new post</a>
         </li>
-
-    <nav>
-        <ul class="pager">
-            <li><a href="#">Previous</a></li>
-            <li><a href="#">Next</a></li>
-        </ul>
-    </nav>
+    {% if maxPages > 1 %}
+        <nav>
+            <ul class="pagination pagination-sm">
+                <li {{ currentPage == 1 ? 'class="disabled"' }}>
+                    <a href={{ path('_index', {page: currentPage-1 < 1 ? 1 : currentPage-1}) }}>Previous</a>
+                </li>
+                {% for i in 1..maxPages %}
+                    <li {{ currentPage == i ? 'class="active"' }}>
+                        <a href={{ path('_index', {page: i}) }}>{{ i }}</a>
+                    </li>
+                {% endfor %}
+                <li {{ currentPage ==  maxPages ? 'class="disabled"' }}>
+                    <a href={{ path('_index', {page: currentPage+1 >= maxPages ? maxPages : currentPage+1}) }}>Next</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
 {% endblock %}
-
 
 {% block createbtn %}
     <a href="{{ path('_new') }}">

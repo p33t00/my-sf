@@ -21,14 +21,35 @@ class PostController extends Controller
      * @Route("/", name="_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $currentPage = $request->query->get('page', 1);
+        $limit = 1;
 
-        $posts = $em->getRepository('BlogBundle:Post')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        // getAllPosts() method returns Paginator instance
+        $paginator = $em->getRepository('BlogBundle:Post')->getAllPosts($currentPage, $limit);
+
+        // You can also call the count methods (check PHPDoc for `paginate()`)
+        // Total fetched (ie: `5` posts)
+        $postQuantity = $paginator->getIterator()->count();
+
+        // Count of ALL posts (ie: `20` posts)
+        $totalPosts = $paginator->count();
+
+        /*
+         * Set of DB query results based on Paginator parameters
+         *
+         * @return ArrayIterator
+         */
+        $iterator = $paginator->getIterator();
+
+        $maxPages = ceil($paginator->count() / $limit);
 
         return $this->render('post/index.html.twig', array(
-            'posts' => $posts,
+            'posts' => $iterator,
+            'maxPages' => $maxPages,
+            'currentPage' => $currentPage
         ));
     }
 
