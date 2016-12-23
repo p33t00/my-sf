@@ -3,6 +3,7 @@
 namespace BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Post
@@ -28,6 +29,7 @@ class Post
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Please fill out ""Title"" field")
      * @ORM\Column(name="title", type="string", length=128)
      */
     private $title;
@@ -168,7 +170,7 @@ class Post
      *
      * @return bool
      */
-    public function getPublished()
+    public function isPublished()
     {
         return $this->published;
     }

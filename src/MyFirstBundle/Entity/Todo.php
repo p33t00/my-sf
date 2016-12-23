@@ -3,6 +3,7 @@
 namespace MyFirstBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Todo
@@ -31,6 +32,7 @@ class Todo
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="category", type="string", length=255)
      */
     private $category;
@@ -52,6 +54,8 @@ class Todo
     /**
      * @var \DateTime
      *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      * @ORM\Column(name="due_date", type="datetime")
      */
     private $dueDate;

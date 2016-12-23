@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 // Include Entity.
-use AppBundle\Entity\todo;
+//use AppBundle\Entity\todo;
 use Symfony\Component\HttpFoundation\Response;
 
 // Extending isn't necessary but it grants access to helper methods and the service container.
@@ -18,11 +18,20 @@ class DubController extends Controller
      */
     public function indexAction(Request $request)
     {
-        echo var_dump($request);
-       // $request->query;
-        $name = 'Vasia';
-        return $this->render('p33t/dub.html.twig', ['name' => $name]);
+        $form = $this->createForm('AppBundle\Form\PeetTestType', ['name' => 'Vasia']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            return $this->render('p33t/dub.html.twig', ['data'=>$data]);
+        }
+
+        $formView  = $form->createView();
+
+        return $this->render('p33t/dub.html.twig', ['form'=>$formView]);
     }
+
 
     /**
      * @Route("/mk", name="mkent")
@@ -50,6 +59,7 @@ $em = $this->getDoctrine()->getManager();
             $em->flush();
         return new Response('Saved new task with id');
     }
+
 
     /**
      * @Route("/get", name="getent")

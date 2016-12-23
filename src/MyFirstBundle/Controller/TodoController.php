@@ -54,13 +54,13 @@ class TodoController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Create Task', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
             ->getForm();
 
+        // handleRequest method populates Todo properties with data from $request obj
+        // Therefore we don't need manualy add data to Todo object like commented below after if() check
         $form->handleRequest($request);
-
-
 
         if($form->isSubmitted() && $form->isValid())
         {
-
+            /*
             // Get data of form
             $name = $form['name']->getData();
             $category = $form['category']->getData();
@@ -68,6 +68,8 @@ class TodoController extends Controller
             $priority = $form['priority']->getData();
             $due_date = $form['due_date']->getData();
             //$create_date = new \DateTime('now');
+
+            // And another way to get data from POST is $request->request->get('varName')
 
             // Map values
             $todoMap = new Todo();
@@ -77,10 +79,13 @@ class TodoController extends Controller
             $todoMap->setPriority($priority);
             $todoMap->setDueDate($due_date);
             //$todoMap->setCreateDate($create_date);
-
+*/
+            //@return Todo
+            $task = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            // Persist the data to DB
-            $em->persist($todoMap);
+            // Persist data to be saved in DB
+            $em->persist($task);
+            //execute all the tasks that were persisted with persist() method
             $em->flush();
 
             // Add a notice message

@@ -24,7 +24,7 @@ class PostController extends Controller
     public function indexAction(Request $request)
     {
         $currentPage = $request->query->get('page', 1);
-        $limit = 1;
+        $limit = 3;
 
         $em = $this->getDoctrine()->getManager();
         // getAllPosts() method returns Paginator instance
@@ -63,6 +63,7 @@ class PostController extends Controller
     {
         $post = new Post();
         $form = $this->createForm('BlogBundle\Form\PostType', $post);
+        // fill the form fields with values from request
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -82,7 +83,7 @@ class PostController extends Controller
     /**
      * Finds and displays a post entity.
      *
-     * @Route("/{id}", name="_show")
+     * @Route("/{id}", name="_show", requirements={"id" = "\d+"})
      * @Method("GET")
      */
     public function showAction(Post $post)

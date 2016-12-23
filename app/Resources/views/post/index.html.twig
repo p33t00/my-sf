@@ -18,36 +18,16 @@
                         <a href="{{ path('_edit', { 'id': post.id }) }}">Edit</a>
                     </p>
 
-                    <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+                    <p>{{ post.description }}</p>
                     <hr>
                 </div><!-- /.blog-post -->
 
-{#
-                <tr>
-                <td><a href="{{ path('_show', { 'id': post.id }) }}">{{ post.id }}</a></td>
-                <td>{{ post.title }}</td>
-                <td>{{ post.description }}</td>
-                <td>{{ post.text }}</td>
-                <td>{% if post.published %}Yes{% else %}No{% endif %}</td>
-                <td>{% if post.created %}{{ post.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if post.updated %}{{ post.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('_show', { 'id': post.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('_edit', { 'id': post.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-#}
         {% endfor %}
 
         <li>
             <a href="{{ path('_new') }}">Create a new post</a>
         </li>
+
     {% if maxPages > 1 %}
         <nav>
             <ul class="pagination pagination-sm">

@@ -2,8 +2,22 @@
 
 {% block body %}
 
+{% if form is defined %}
+    {{ form_start(form) }}
+    {# form_widget(form) #}
+    {{ form_row(form.name) }}
+    {{ form_row(form.file) }}
+    {{ form_end(form) }}
+{% else %}
+    <h3>{{ data.name }}</h3>
+    <p>The filepath you've uploaded - {{ data.file.pathname }}</p>
+    <br>
+    <a href={{path('home')}}>Try Again</a>
+{% endif %}
+
 <p>Heloo {{ name|default('Vasiliok') }}. here are a few words. Just to test</p>
 
-    <a href={{path('lucky_page')}}>GO LUCKY</a>
-    <a href={{path('create')}}>Create Data</a>
+    <a href={{path('octo_page')}}>GO LUCKY</a>
+
+
 {% endblock %}
