@@ -117,41 +117,50 @@ class TodoController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Save Task', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
             ->getForm();
 
-        $form->handleRequest($request);
+        // Submitting the form Manualy
+        //$form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-            // Get data of form
-            $name = $form['name']->getData();
-            $category = $form['category']->getData();
-            $description = $form['description']->getData();
-            $priority = $form['priority']->getData();
-            $due_date = $form['due_date']->getData();
-            //$create_date = new \DateTime('now');
+        if ($request->isMethod('POST')) {
 
-            // Map values
-            //$todoMap = new Todo();
-            $todo->setName($name);
-            $todo->setCategory($category);
-            $todo->setDescription($description);
-            $todo->setPriority($priority);
-            $todo->setDueDate($due_date);
-            $todo->setCreateDate($todo->getCreateDate());
+            // here's what it's all about
+//            $form->submit($request->request->get($form->getName()));
 
-            $em = $this->getDoctrine()->getManager();
+            // submitting only one field
+            $form->get('category')->submit('Dangerous');
 
-            /*
-             * $em->persist($todo) isn't necessary.
-             * Recall that this method simply tells Doctrine to manage or "watch" the $product object.
-             * In this case, since you fetched the $product object from Doctrine, it's already managed.
-             * In other words, the entity isn't loaded my entityManager, so we need to tell Doctrine to "watch" it.
-             */
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Get data of form
+                $name = $form['name']->getData();
+                $category = $form['category']->getData();
+                $description = $form['description']->getData();
+                $priority = $form['priority']->getData();
+                $due_date = $form['due_date']->getData();
+                //$create_date = new \DateTime('now');
 
-            // Add a notice message
-            $this->addFlash('notice', 'Task Updated');
+                // Map values
+                //$todoMap = new Todo();
+                $todo->setName($name);
+                $todo->setCategory($category);
+                $todo->setDescription($description);
+                $todo->setPriority($priority);
+                $todo->setDueDate($due_date);
+                $todo->setCreateDate($todo->getCreateDate());
 
-            return $this->redirectToRoute('todo_list');
+                $em = $this->getDoctrine()->getManager();
+
+                /*
+                 * $em->persist($todo) isn't necessary.
+                 * Recall that this method simply tells Doctrine to manage or "watch" the $product object.
+                 * In this case, since you fetched the $product object from Doctrine, it's already managed.
+                 * In other words, the entity isn't loaded my entityManager, so we need to tell Doctrine to "watch" it.
+                 */
+                $em->flush();
+
+                // Add a notice message
+                $this->addFlash('notice', 'Task Updated');
+
+                return $this->redirectToRoute('todo_list');
+            }
         }
 
         // Template file is located in app/Resources/views/Todo
