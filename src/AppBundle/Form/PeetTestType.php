@@ -20,6 +20,7 @@ class PeetTestType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('last_name', TextType::class)
             ->add('file', FileType::class)
             ->add('send', SubmitType::class);
     }
