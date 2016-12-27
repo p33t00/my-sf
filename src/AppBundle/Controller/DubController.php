@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Tst;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 // Loads Controller Class
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,13 +19,38 @@ class DubController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $form = $this->createForm('AppBundle\Form\PeetTestType', ['name' => 'Vasia']);
+        /*
+         * This way form uses array instead of Entity and returned value is array also
+         *
+         * $form = $this->createForm('AppBundle\Form\PeetTestType', ['name' => 'Vasia']);
+         */
+        $tst = new Tst();
+
+        $form = $this->createForm('AppBundle\Form\PeetTestType', $tst);
         $form->handleRequest($request);
+
+        $validator = $this->get('validator');
+        $errorList = $validator->validate($tst);
+//        $playload = $errorList->get(1)->getConstraint()->payload;
+//        $constraint = $errorList->get(1);
+
+        $errStr = (string) $errorList;
+
 
         if ($form->isSubmitted() && $form->isValid())
         {
             $data = $form->getData();
-            return $this->render('p33t/dub.html.twig', ['data'=>$data]);
+
+            $file = $tst->getFile();
+            $filename = uniqid().'.'.$file->guessExtension();
+            $file->move('img/', $filename);
+            $tst->setFile($filename);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tst);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
         }
 
         $formView  = $form->createView();

@@ -1,12 +1,16 @@
+{# Tells the Form component to use my new file_widget theme fragment defined by the path #}
+{% form_theme form 'form/fields.html.twig' %}
+{# or if you want to use multiple themes #}
+{#{% form_theme form 'form/fields.html.twig' 'form/fields2.html.twig' %}#}
+
 {% extends 'p33t/base.html.twig' %}
 
 {% block body %}
 
 {% if form is defined %}
     {{ form_start(form) }}
-    {# form_widget(form) #}
+    {{ form_widget(form) }}
     {{ form_row(form.name) }}
-    {{ form_row(form.file) }}
     {{ form_end(form) }}
 {% else %}
     <h3>{{ data.name }}</h3>
@@ -18,6 +22,5 @@
 <p>Heloo {{ name|default('Vasiliok') }}. here are a few words. Just to test</p>
 
     <a href={{path('octo_page')}}>GO LUCKY</a>
-
 
 {% endblock %}

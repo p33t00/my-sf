@@ -1,0 +1,14 @@
+{% extends 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block file_widget %}
+    {% spaceless %}
+
+        <hr>
+        {% if image_url is not null %}
+            <img src="{{ asset(image_url) }}"/>
+        {% endif %}
+        {{ block('form_widget') }}
+        <hr>
+
+    {% endspaceless %}
+{% endblock %}

@@ -5,3 +5,15 @@ services:
     tst.serv:
         class: AppBundle\Extensions\TstService
         arguments: ["@doctrine"]
+
+#   Regisner Validator with ContainsAlphanum Constraint as a service
+    app_contains_alphanum_validator:
+        class: AppBundle\Validator\Constraints\ContainsAlphanumValidator
+        tags:
+            - { name:validator.constraint_validator }
+
+#   Register Form Type Extension for FileType
+    app.image_type_extension:
+        class: AppBundle\Form\Extension\ImageTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }

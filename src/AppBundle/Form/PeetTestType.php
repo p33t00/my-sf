@@ -19,9 +19,9 @@ class PeetTestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, ['required'=>false])
             ->add('last_name', TextType::class)
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, ['required'=>false, 'image_path' => 'file'])
             ->add('send', SubmitType::class);
     }
 }
