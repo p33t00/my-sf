@@ -1,10 +1,33 @@
+{#{% form_theme form 'form/fields.html.twig' %}#}
+
+{#
+Theme adds "itself" to default initial form theme (adds any overriden fields -> text_label)
+But it works only if current theme extends other theme
+#}
+{% form_theme form _self %}
+
 {% extends 'base.html.twig' %}
+
+
+{# Added an asterix to required fields #}
+{% use 'bootstrap_3_horizontal_layout.html.twig' with form_label as base_form_label %}
+
+{% block form_label %}
+    {{ block('base_form_label') }}
+
+    {% if required %}
+        <span class="required" style="color:red" title="This field is required">*</span>
+    {% endif %}
+{% endblock %}
+
 
 {% block body %}
 
     <h2 class='page-header'>Add some Todos</h2>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    {#{{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}#}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.category) }}
     {{ form_end(form) }}
 
 {% endblock %}

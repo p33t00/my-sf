@@ -49,13 +49,7 @@ class Tst
      * @Assert\NotBlank(payload = {"severity" = "warning"})
      */
     private $file;
-
-
-    /**
-     * @var string The path - typically stored in the database
-     */
-    private $path;
-
+    
 
     /**
      * Get id
@@ -137,10 +131,5 @@ class Tst
     public function getFile()
     {
         return $this->file;
-    }
-
-    public function getWebPath()
-    {
-        return 'fonstola.ru-88713.jpg';
     }
 }

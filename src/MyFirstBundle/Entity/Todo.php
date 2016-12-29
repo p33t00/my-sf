@@ -25,6 +25,7 @@ class Todo
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Dude, fill out this field")
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;

@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\VarDumper\Tests\Fixture\DumbFoo;
 
 
 // Extending isn't necessary but it grants access to helper methods and the service container.
@@ -56,6 +57,7 @@ class TodoController extends Controller
 
         // handleRequest method populates Todo properties with data from $request obj
         // Therefore we don't need manualy add data to Todo object like commented below after if() check
+        // The MAIN THING IT DOES - Submits the form
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -111,25 +113,25 @@ class TodoController extends Controller
         $form = $this->createFormBuilder($todo)
             ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('category', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->add('description', TextareaType::class, array('required' => false, 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('priority', ChoiceType::class, array('choices' => array('low' => 'Low', 'normal' => 'Normal', 'hi' => 'Hi'), 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
             ->add('due_date', DateTimeType::class, array('years' => array(2016, 2017, 2018), 'attr' => array('style' => 'margin-bottom:15px')))
             ->add('save', SubmitType::class, array('label' => 'Save Task', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
             ->getForm();
 
-        // Submitting the form Manualy
         //$form->handleRequest($request);
 
         if ($request->isMethod('POST')) {
 
-            // here's what it's all about
-//            $form->submit($request->request->get($form->getName()));
+            // Submitting the form Manualy
+            $form->submit($request->request->get($form->getName()));
 
             // submitting only one field
-            $form->get('category')->submit('Dangerous');
+            // $form->get('category')->submit('Dangerous');
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // Get data of form
+                
                 $name = $form['name']->getData();
                 $category = $form['category']->getData();
                 $description = $form['description']->getData();
