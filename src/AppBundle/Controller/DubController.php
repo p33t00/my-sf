@@ -2,10 +2,17 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Tst;
+use AppBundle\Entity\Product;
+use AppBundle\Form\CategoryType;
+use Doctrine\DBAL\Types\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 // Loads Controller Class
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+//use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 // Include Entity.
 //use AppBundle\Entity\todo;
@@ -26,6 +33,10 @@ class DubController extends Controller
          */
         $tst = new Tst();
 
+//        $subTst = new SubTst();
+
+//        $tst->getNameDetails()->add($subTst);
+
         $form = $this->createForm('AppBundle\Form\PeetTestType', $tst);
         $form->handleRequest($request);
 
@@ -43,8 +54,10 @@ class DubController extends Controller
 
             $file = $tst->getFile();
             $filename = uniqid().'.'.$file->guessExtension();
-            $file->move('img/', $filename);
+            //$file->move('img/', $filename);
             $tst->setFile($filename);
+
+            echo dump($tst); exit;
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($tst);
@@ -58,11 +71,71 @@ class DubController extends Controller
         return $this->render('p33t/dub.html.twig', ['form'=>$formView]);
     }
 
+    /**
+     * @Route("/rel", name="db_relations")
+     */
+    public function relAction(Request $request)
+    {
+        $product = new Product();
+        $form = $this->createFormBuilder($product)
+            ->add('name')
+            ->add('category', ChoiceType::class, ['choices' => [
+                'bikes' => '1',
+                'cars' => '2'
+            ]])
+            ->add('submit', SubmitType::class)
+            ->getForm()
+        ;
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+
+            $category_id = $form['category']->getData();
+
+            $category = $this->getDoctrine()->getRepository('AppBundle:Category')->find($category_id);
+            $product->setCategory($category);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirectToRoute('db_relations');
+        }
+        
+        return $this->render('p33t/rel.html.twig', ['form'=>$form->createView()]);
+    }
+
 
     /**
      * @Route("/mk", name="mkent")
      */
-    public function createAction(Request $request){
+    public function checkoutAction(Request $request){
+
+        $catNew = $this->getDoctrine()->getRepository('AppBundle:Category')->find(2);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($catNew);
+        $em->flush();
+
+
+        exit;
+
+
+
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Category');
+        $category = $repo->find(1);
+
+        // Returns Product Proxy class
+
+        foreach($category->getProducts() as $item){
+           echo dump($item->getName());
+        }
+exit;
+
+        echo dump($category);
+        exit;
 
         $now = new\DateTime();
 

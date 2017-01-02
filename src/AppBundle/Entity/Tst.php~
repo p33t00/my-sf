@@ -2,10 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Form\PeetSubTestType;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints\ContainsAlphanum;
 use Symfony\Bridge\Monolog\Logger;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tst
@@ -23,6 +25,13 @@ class Tst
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="subId", type="integer")
+     */
+    private $subId;
 
     /**
      * @var string
@@ -49,6 +58,40 @@ class Tst
      * @Assert\NotBlank(payload = {"severity" = "warning"})
      */
     private $file;
+
+
+    /**
+     * @var string
+     */
+    protected $nameDetails;
+/*
+
+    public function __construct()
+    {
+        $this->nameDetails = new ArrayCollection();
+    }*/
+
+    /**
+     * Get nameDetails
+     *
+     * @return ArrayCollection|string
+     */
+    public function getNameDetails()
+    {
+        return $this->nameDetails;
+    }
+
+    /**
+     * Set nameDetails
+     *
+     * @param  $nameDetails
+     *
+     * @return AppBundle\Entity\SubTst
+     */
+    public function setNameDetails(SubTst $nameDetails)
+    {
+        $this->nameDetails = $nameDetails;
+    }
 
     /**
      * Get id
