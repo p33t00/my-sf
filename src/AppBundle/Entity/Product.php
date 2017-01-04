@@ -18,7 +18,7 @@ class Product
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="AUTO")products
      */
     private $id;
 
@@ -32,8 +32,8 @@ class Product
     /**
      * @var AppBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @@ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @@ORM\JoinColumn(name="category_id", referencedColumnName="id")
      *
      * The above JoinColumn is optional as it would default to address_id and id anyways
      */

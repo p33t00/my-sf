@@ -111,7 +111,7 @@ class OptionsResolver implements Options
 
     /**
      * Sets the default value of a given option.
-     resolver*
+     *
      * If the default value should be set based on other options, you can pass
      * a closure with the following signature:
      *

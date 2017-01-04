@@ -1,14 +1,24 @@
+
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
 blog:
     resource: "@BlogBundle/Controller/"
     type:     annotation
     prefix:   /
 
-# some routes must have '/' at the end 
+# some routes must have '/' at the end
 # otherwise an exception might be thrown - BlogBundle\Entity\Post object not found.
-# Don't know the reason of it 
-stat: 
+# Don't know the reason of it
+stat:
     path: /statest/
-    defaults: 
+    defaults:
         _controller: FrameworkBundle:Template:template
         template:  AppBundle:Default:app_lucky_octo.html.twig
 

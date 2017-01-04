@@ -7,6 +7,7 @@ use AppBundle\Entity\Tst;
 use AppBundle\Entity\Product;
 use AppBundle\Form\CategoryType;
 use Doctrine\DBAL\Types\TextType;
+use Doctrine\ORM\UnitOfWork;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 // Loads Controller Class
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -93,8 +94,8 @@ class DubController extends Controller
         {
 
             $category_id = $form['category']->getData();
-
-            $category = $this->getDoctrine()->getRepository('AppBundle:Category')->find($category_id);
+//            AppBundle:Category Entity is not available
+//            $category = $this->getDoctrine()->getRepository('AppBundle:Category')->find($category_id);
             $product->setCategory($category);
 
             $em = $this->getDoctrine()->getManager();
@@ -113,15 +114,50 @@ class DubController extends Controller
      */
     public function checkoutAction(Request $request){
 
-        $catNew = $this->getDoctrine()->getRepository('AppBundle:Category')->find(2);
+/*
+        By Simple Conditions
+
+        Load by owning side associations through the repository
+
+        $category = $this->getDoctrine()->getManager()->find('AppBundle:Category', 1);
+
+        The owning side
+        $product = $this->getDoctrine()->getRepository('AppBundle:Product')->findBy( array('category' => $category->getId()));
+*/
+
+
+
+//        $product = $this->getDoctrine()->getRepository('AppBundle:Product')->findOneBy(['name' => 'BMX']);
+
+//        $u = $this->getDoctrine()->getManager()->getUnitOfWork()->getEntityState($entity);
+
+
+//            Getting Product Entityt via EM
+//        $a = $this->getDoctrine()->getManager()->find('AppBundle\Entity\Product', 1);
+
+
+
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Product');
+        $product = $repo->find(8);
+
+        echo dump($product);
+        exit;
+
+
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Category');
+        $category = $repo->find(1);
+        $category->getProducts()->remove($product);
+
+
+
+//        $catNew = $this->getDoctrine()->getRepository('AppBundle:Category')->find(2);
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($catNew);
+        $em->remove($category);
         $em->flush();
 
 
         exit;
-
 
 
         $repo = $this->getDoctrine()->getRepository('AppBundle:Category');
@@ -132,46 +168,21 @@ class DubController extends Controller
         foreach($category->getProducts() as $item){
            echo dump($item->getName());
         }
-exit;
 
-        echo dump($category);
-        exit;
-
-        $now = new\DateTime();
-
-       echo '<pre>';
-       echo dump($now);
-       echo '</pre>';
-       exit;
-
-
-        $todo = new todo();
-        $todo->setName('Go shopping');
-        $todo->setCategory('Shopping');
-        $todo->setDescription('Go to TJmax get yourself some food.');
-        $todo->setPriority('High');
-        $todo->setDueDate($now);
-        $todo->setCreateDate($now);
-
-$em = $this->getDoctrine()->getManager();
-        $em->persist($todo);
-            $em->flush();
         return new Response('Saved new task with id');
     }
 
 
     /**
-     * @Route("/get", name="getent")
+     * @Route("/get/{id}", name="getent")
      */
-    public function getentAction(Request $request)
+    public function getentAction(Product $product)
     {
-        $todo = $this->getDoctrine()->getRepository('AppBundle:todo')->findAll();
-        /*
-        echo '<pre>';
-        echo var_dump($todo[0]['name']);
-        echo '</pre>';
-        */
-        dump($todo[0]->getId());
-        return new Response('Helooooo');
+        /**
+         * @ParamConverter is in action )))
+         *
+         * @ref  http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+         */
+        return new Response($product->getName());
     }
 }
