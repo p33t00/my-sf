@@ -8,6 +8,9 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 blog:
     resource: "@BlogBundle/Controller/"
     type:     annotation

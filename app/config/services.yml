@@ -18,7 +18,7 @@ services:
     app.admin.blog_post:
 #    admin.blog_post:
             class: AppBundle\Admin\BlogPostAdmin
-            #                       entity                  Admin Service
+            #                       entity         Admin Service
             arguments: [~, AppBundle\Entity\BlogPost, ~]
             tags:
                 - { name: sonata.admin, manager_type: orm, label: Blog post }

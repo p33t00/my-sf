@@ -32,6 +32,10 @@ framework:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        cookie_lifetime: 86400
+        gc_maxlifetime: 1200 # session will expire after 10 minutes of inactivity
+        gc_probability: 1
+        gc_divisor: 1
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -101,3 +105,7 @@ sonata_admin:
     templates:
             dashboard: SonataAdminBundle:Core:dashboard.html.twig
 
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
