@@ -20,9 +20,17 @@ security:
             form_login:
                  provider: fos_userbundle
                  csrf_token_generator: security.csrf.token_manager
-#                 login_path:  /login
-            logout:       true
+#                 2 строчки ниже нужны для редиректа на определ стр после успешной аутентификации
+                 always_use_default_target_path: true
+                 default_target_path: /profile
+
+#            logout:       true
+            logout:
+                path: /logout
+                target: /dub
             anonymous:    true
+
+
 
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
@@ -34,10 +42,11 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ANOTHER_COOL_ROLE]
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/dub/, role: ROLE_ADMIN }

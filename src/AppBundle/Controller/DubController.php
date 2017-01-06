@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 // Include Entity.
 //use AppBundle\Entity\todo;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 // Extending isn't necessary but it grants access to helper methods and the service container.
 class DubController extends Controller
@@ -184,5 +186,19 @@ class DubController extends Controller
          * @ref  http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
          */
         return new Response($product->getName());
+    }
+    
+    /**
+     * @Route("/sec", name="secure_page")
+     */
+    public function secAction(UserInterface $user = null)
+    {
+        $is_logged =  $user == null ? 'not logged in' : 'logged in';
+
+        echo dump($is_logged);
+        exit;
+
+        if($this->isGranted('IS_AUTHENTICATED_FULLY'))
+        return $this->render('@App/Default/sec.html.twig');
     }
 }

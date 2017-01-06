@@ -175,7 +175,7 @@ class TodoController extends Controller
      */
     public function detailsAction(Request $request, $id, $post)
     {
-        dump($post); exit;
+//        dump($post); exit;
 
         // В качестве аргумента используется путь MyFirstBundle и название класса/файла
         // По документации надо выбирать данные из таблицы как в методе deleteAction
