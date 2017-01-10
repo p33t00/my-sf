@@ -1,0 +1,27 @@
+.sidebar-menu > li:hover > a,
+.sidebar-menu .treeview-menu > li:hover > a,
+.sidebar-menu > li.active > a,
+.sidebar-menu .treeview-menu > li.active > a,
+.sidebar-collapse .sidebar-menu > li.active.submenu-active > a,
+.sidebar-collapse .sidebar-menu > li:hover .treeview-menu > li.active > a {
+    background: #fff2c6;
+    border-left-color: rgb(244, 150, 66);
+}
+
+.sidebar-menu > li:hover > a > i,
+.sidebar-menu > li.active > a > i{
+    color: rgb(244, 150, 66);
+}
+
+.sidebar-menu > li:hover > a > span,
+.sidebar-menu > li.active > a > span{
+    color: #444;
+}
+
+.sidebar-menu > li > a{
+    color:#afafaf;
+}
+
+#easyadmin-edit-Product-2{
+    background-color: #00a7d0 !important;
+}

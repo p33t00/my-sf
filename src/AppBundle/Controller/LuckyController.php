@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 //use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Process\Tests\ProcessBuilderTest;
 
 class LuckyController extends Controller
 {
@@ -49,5 +52,31 @@ class LuckyController extends Controller
         $task = $tst->getTaskById(2);
 
         return new Response($task[0]->getName());
+    }
+
+    /**
+     * @Route("/aaa", name="aaa")
+     */
+    public function aaaAction()
+    {
+        $Category = $this->getDoctrine()->getRepository('AppBundle:Category')->find(3);
+//        $Product = new Product();
+//        $Product->setName('Lopata');
+//        $Category->addProducts($Product);
+
+        $Prod2 = $this->getDoctrine()->getRepository('AppBundle:Product')->find(2);
+        $Prod3 = $this->getDoctrine()->getRepository('AppBundle:Product')->find(1);
+
+        $Category->addProducts($Prod2);
+        $Category->addProducts($Prod3);
+
+        $em = $this->getDoctrine()->getManager();
+        echo dump($em);
+        exit;
+        $em->persist($Category);
+        $em->flush();
+
+        exit;
+
     }
 }

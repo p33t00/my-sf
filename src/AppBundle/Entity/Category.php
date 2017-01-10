@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Category
@@ -30,14 +30,18 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
+     * @var Product[]|ArrayCollection
+     * 
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category", cascade={"persist"})
      */
-    private $blogPosts;
+    private $products;
 
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->blogPosts = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -74,9 +78,44 @@ class Category
         return $this->name;
     }
 
-    public function getBlogPosts()
+    /**
+     * Add product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Category
+     */
+    public function addProduct(Product $product)
     {
-        return $this->blogPosts;
+            $product->setCategory($this);
+            $this->products->add($product);
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \AppBundle\Entity\Product $product
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->products->removeElement($product);
+        $product->setCategory(null);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
-

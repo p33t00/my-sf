@@ -92,3 +92,30 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: AppBundle\Entity\User
+
+easy_admin:
+    site_name: "notePeet"
+    design:
+        color_scheme: 'light'
+        brand_color: 'rgb(244, 150, 66)'
+        assets:
+            favicon: '/img/Client_notes-orange.png'
+            css:
+                - 'css/EasyBundle/common.css'
+
+    entities:
+        Product:
+            class: AppBundle\Entity\Product
+            label: 'Products'
+            list:
+                title: "Products Available"
+#                actions: ['show']
+
+        Category:
+            class: AppBundle\Entity\Category
+#            disabled_actions: ['show']            #makes association field titles act as a NOT link  (category in product list)
+            list:
+#                actions: ['show']
+
+        User:
+            class: AppBundle\Entity\User

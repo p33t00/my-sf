@@ -10,3 +10,5 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 2db832d8cefd4712bfa916ef396d15793d61abe6
+
+    asset_path: "%kernel.root_dir%/../web"
