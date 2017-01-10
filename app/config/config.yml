@@ -119,3 +119,28 @@ easy_admin:
 
         User:
             class: AppBundle\Entity\User
+            form:
+#                disable validation of required fields taht are not rendered
+                form_options: { validation_groups: false }
+                fields:
+                    - username
+                    - email
+                    - enabled
+#                    - lastLogin
+#                    - {property: 'username_canonical', type_options: {required: false}}
+            list:
+                fields:
+                    - id
+                    - username
+                    - email
+                    - enabled
+                    - lastLogin
+
+            new:
+                fields:
+                    - username
+                    - email
+                    - password
+                    - enabled
+                    - salt
+                    - roles

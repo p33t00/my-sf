@@ -21,8 +21,8 @@ security:
                  provider: fos_userbundle
                  csrf_token_generator: security.csrf.token_manager
 #                 2 строчки ниже нужны для редиректа на определ стр после успешной аутентификации
-#                 always_use_default_target_path: true
-#                 default_target_path: /profile
+                 always_use_default_target_path: true
+                 default_target_path: /admin
 
 #            logout:       true
             logout:
