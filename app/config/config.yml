@@ -126,8 +126,11 @@ easy_admin:
                     - username
                     - email
                     - enabled
-#                    - lastLogin
-#                    - {property: 'username_canonical', type_options: {required: false}}
+                    # if administrators are allowed to edit users' passwords and roles, add this:
+#                    - username
+#                    - email
+#                    - enabled
+##                    - {property: 'username_canonical', type_options: {required: false}}
             list:
                 fields:
                     - id
@@ -135,12 +138,31 @@ easy_admin:
                     - email
                     - enabled
                     - lastLogin
-
             new:
                 fields:
                     - username
                     - email
-                    - password
+                    - { property: 'plainPassword', type: 'text', type_options: { label: 'password' } }
                     - enabled
                     - salt
+#                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+            edit:
+                fields:
+                    - username
+                    - email
+                    - { property: 'plainPassword', type: 'text', type_options: { label: 'password', required: false } }
+                    - enabled
+                    - salt
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+            show:
+                fields:
+                    - username
+                    - email
+                    - enabled
+                    - lastLogin
+                    - salt
+                    - password
+                    - last_login
+                    - confirmation_token
+                    - password_requested_at
                     - roles

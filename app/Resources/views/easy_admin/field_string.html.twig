@@ -8,5 +8,5 @@
     {% set primary_key_value = attribute(item, link_parameters.primary_key_name) %}
     <a href="{{ path('easyadmin', link_parameters|merge({ id: primary_key_value, referer: '' })) }}">{{ val }}</a>
 {% else %}
-    {{ item }}
+    {{ val }}
 {% endif %}
